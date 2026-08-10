@@ -29,7 +29,7 @@ public interface QuickJSNative {
 
     JSFunction _initNewJSFunction(long contextPtr, int javaCallerId, boolean voidMethod);
 
-    void _releasePtr(long contextPtr, long tag, int u_int32, double u_float64, long u_ptr);
+    void _releasePtr(long contextPtr, long tag,  long u_uint64, double u_float64, long u_ptr);
 
     JSFunction _registerJavaMethod(long contextPtr, JSValue objectHandle, String jsFunctionName, int javaCallerId, boolean voidMethod);
 

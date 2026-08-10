@@ -1,3 +1,20 @@
+
+def getSdkDir() {
+    def sdkDir = System.getenv('ANDROID_SDK_ROOT') ?: System.getenv('ANDROID_HOME')
+    if (sdkDir == null || !file(sdkDir).exists()) {
+        sdkDir = System.properties['user.home'] + '/Android/Sdk'
+    }
+    
+    def localProps = file('local.properties')
+    if (!localProps.exists()) {
+        localProps.text = "sdk.dir=${sdkDir.replace('\\\\', '\\\\\\\\')}\n"
+    }
+    
+    return sdkDir
+}
+
+ext.sdkDir = getSdkDir()
+
 group = GROUP_ID
 version = VERSION_NAME
 apply plugin: 'maven'
@@ -31,42 +48,5 @@ if (isAndroid) {
     }
     artifacts {
         archives javadocJar, sourcesJar
-    }
-}
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-            repository(url: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: OSSRH_USERNAME, password: OSSRH_PASSWORD)
-            }
-            snapshotRepository(url: "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: OSSRH_USERNAME, password: OSSRH_PASSWORD)
-            }
-            pom.project {
-                name POM_NAME
-                packaging isAndroid ? 'jar' : 'aar'
-                description POM_DESCRIPTION
-                url POM_URL
-                scm {
-                    connection POM_SCM_CONNECTION
-                    developerConnection POM_SCM_DEV_CONNECTION
-                    url POM_SCM_URL
-                }
-                licenses {
-                    license {
-                        name POM_LICENCE_NAME
-                        url POM_LICENCE_URL
-                    }
-                }
-                developers {
-                    developer {
-                        id POM_DEVELOPER_ID
-                        name POM_DEVELOPER_NAME
-                        email POM_DEVELOPER_EMAIL
-                    }
-                }
-            }
-        }
     }
 }

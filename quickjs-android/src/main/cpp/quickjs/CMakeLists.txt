@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.10.2)
 project(quickjs CXX)
 include_directories(quickjs)
 set(SOURCE_DIR
+        quickjs/dtoa.c
         quickjs/cutils.c
         quickjs/libbf.c
         quickjs/libregexp.c

@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 @Keep
 public class JSValue {
-//    JS_TAG_FIRST       = -11, /* first negative tag */
+    //    JS_TAG_FIRST       = -11, /* first negative tag */
 //    JS_TAG_BIG_DECIMAL = -11,
 //    JS_TAG_BIG_INT     = -10,
 //    JS_TAG_BIG_FLOAT   = -9,
@@ -52,7 +52,7 @@ public class JSValue {
     protected JSContext context;
 
     long tag;
-    int u_int32;
+    long u_uint64;
     double u_float64;
     long u_ptr;
 
@@ -124,10 +124,10 @@ public class JSValue {
         }
     }
 
-    JSValue(JSContext context, long tag, int u_int32, double u_float64, long u_ptr) {
+    JSValue(JSContext context, long tag, long u_uint64, double u_float64, long u_ptr) {
         this.context = context;
         this.tag = tag;
-        this.u_int32 = u_int32;
+        this.u_uint64 = u_uint64;
         this.u_float64 = u_float64;
         this.u_ptr = u_ptr;
         if (context != null) {
@@ -136,11 +136,10 @@ public class JSValue {
     }
 
     JSValue(JSContext context, JSValue value) {
-        // 赋值给新的对象，原来的对象就要标记成销毁
         value.released = true;
         this.context = context;
         this.tag = value.tag;
-        this.u_int32 = value.u_int32;
+        this.u_uint64 = value.u_uint64;
         this.u_float64 = value.u_float64;
         this.u_ptr = value.u_ptr;
         if (context != null) {
@@ -206,7 +205,6 @@ public class JSValue {
     public static JSValue NULL() {
         return null;
     }
-
 
     @Override
     public boolean equals(Object o) {

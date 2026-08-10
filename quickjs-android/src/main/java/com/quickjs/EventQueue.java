@@ -197,8 +197,8 @@ class EventQueue implements QuickJSNative {
     }
 
     @Override
-    public void _releasePtr(long contextPtr, long tag, int u_int32, double u_float64, long u_ptr) {
-        postVoid(() -> quickJSNative._releasePtr(contextPtr, tag, u_int32, u_float64, u_ptr));
+    public void _releasePtr(long contextPtr, long tag,  long u_uint64, double u_float64, long u_ptr) {
+        postVoid(() -> quickJSNative._releasePtr(contextPtr, tag, u_uint64, u_float64, u_ptr));
     }
 
     @Override

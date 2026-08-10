@@ -47,7 +47,7 @@ class QuickJSNativeImpl implements QuickJSNative {
     public native JSFunction _initNewJSFunction(long contextPtr, int javaCallerId, boolean voidMethod);
 
     @Override
-    public native void _releasePtr(long contextPtr, long tag, int u_int32, double u_float64, long u_ptr);
+    public native void _releasePtr(long contextPtr, long tag,  long u_uint64, double u_float64, long u_ptr);
 
     @Override
     public native JSFunction _registerJavaMethod(long contextPtr, JSValue objectHandle, String jsFunctionName, int javaCallerId, boolean voidMethod);

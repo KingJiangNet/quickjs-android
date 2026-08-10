@@ -39,9 +39,9 @@ public class JSContext extends JSObject implements Closeable {
 
     void releaseObjRef(JSValue reference, boolean finalize) {
         if (finalize) {
-            releaseObjPtrPool.add(new Object[]{reference.tag, reference.u_int32, reference.u_float64, reference.u_ptr});
+            releaseObjPtrPool.add(new Object[]{reference.tag, reference.u_uint64, reference.u_float64, reference.u_ptr});
         } else {
-            getNative()._releasePtr(getContextPtr(), reference.tag, reference.u_int32, reference.u_float64, reference.u_ptr);
+            getNative()._releasePtr(getContextPtr(), reference.tag, reference.u_uint64, reference.u_float64, reference.u_ptr);
         }
         removeObjRef(reference);
     }
@@ -49,7 +49,7 @@ public class JSContext extends JSObject implements Closeable {
     private void checkReleaseObjPtrPool() {
         while (!releaseObjPtrPool.isEmpty()) {
             Object[] ptr = releaseObjPtrPool.get(0);
-            getNative()._releasePtr(getContextPtr(), (long) ptr[0], (int) ptr[1], (double) ptr[2], (long) ptr[3]);
+            getNative()._releasePtr(getContextPtr(), (long) ptr[0], (long) ptr[1], (double) ptr[2], (long) ptr[3]);
             releaseObjPtrPool.remove(0);
         }
     }
